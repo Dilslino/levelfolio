@@ -1,0 +1,8 @@
+'use client';
+import Link from 'next/link';
+import { Briefcase, FolderKanban, Home, Mail, Menu, ScrollText } from 'lucide-react';
+import { CommandPalette } from './command-palette';
+import { ThemeToggle } from './theme-toggle';
+import { Button } from './ui/button';
+const nav=[['/','Home',Home],['/projects','Projects',FolderKanban],['/experience','Experience',Briefcase],['/resume','Resume',ScrollText],['/contact','Contact',Mail]] as const;
+export function SiteShell({children}:{children:React.ReactNode}){return <><header className="sticky top-0 z-40 border-b border-line bg-background/80 backdrop-blur-xl"><div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3"><Link href="/" className="font-semibold tracking-tight">Levelfolio</Link><nav className="hidden items-center gap-1 md:flex">{nav.map(([href,label])=><Link key={href} href={href} className="rounded-xl px-3 py-2 text-sm text-secondary hover:bg-white/5 hover:text-primary">{label}</Link>)}</nav><div className="flex items-center gap-2"><Button variant="outline" className="hidden sm:inline-flex" onClick={()=>window.dispatchEvent(new KeyboardEvent('keydown',{key:'k',metaKey:true}))}>⌘K</Button><ThemeToggle/><Menu className="md:hidden text-secondary" size={20}/></div></div></header><main className="mx-auto max-w-6xl px-4 pb-28 pt-8 md:pb-12">{children}</main><nav className="fixed inset-x-3 bottom-3 z-40 grid grid-cols-5 rounded-2xl border border-line bg-elevated/95 p-1 shadow-soft backdrop-blur-xl md:hidden">{nav.map(([href,label,Icon])=><Link key={href} href={href} className="flex flex-col items-center gap-1 rounded-xl px-2 py-2 text-[11px] text-secondary hover:bg-white/5 hover:text-primary"><Icon size={18}/>{label}</Link>)}</nav><CommandPalette/></>}
